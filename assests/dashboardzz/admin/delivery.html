@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Management - Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary-50: #eef7ff;
+            --primary-100: #d8ecff;
+            --primary-200: #badfff;
+            --primary-300: #8ecfff;
+            --primary-400: #5bb2ff;
+            --primary-500: #338eff;
+            --primary-600: #0d7ff2;
+            --primary-700: #0060d1;
+            --primary-800: #0852b4;
+            --primary-900: #0b448a;
+            --primary-950: #0c2b54;
+        }
+        .sidenav-collapse { display: none; padding-left: 1rem; }
+        .sidenav-collapse.show { display: block; }
+        .sidenav-toggle::after { 
+            content: '▶'; 
+            display: inline-block; 
+            margin-left: auto; 
+            transition: transform 0.2s ease-in-out; 
+            font-size: 0.8em; 
+        }
+        .sidenav-toggle.open::after { transform: rotate(90deg); }
+        .status-badge { @apply inline-block px-3 py-1 text-xs font-semibold rounded-full capitalize; }
+        .status-pending { @apply bg-yellow-100 text-yellow-800; }
+        .status-delivered { @apply bg-green-100 text-green-800; }
+        .status-failed { @apply bg-red-100 text-red-800; }
+        .status-out-for-delivery { @apply bg-blue-100 text-blue-800; }
+        .status-unassigned { @apply bg-gray-100 text-gray-800; }
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-600);
+            border-radius: 50%;
+            border: 2px solid var(--primary-200);
+        }
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: -1.25rem;
+            top: 1.25rem;
+            width: 2px;
+            height: calc(100% - 0.75rem);
+            background: var(--primary-200);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans">
+    <div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- HEADER -->
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-4 sm:px-10 py-3 shadow-sm sticky top-0 z-30">
+                <div class="flex items-center gap-4">
+                    <button id="hamburger-button" class="flex lg:hidden size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div class="hidden sm:flex items-center gap-4 text-[#111418]">
+                        <div class="size-6 text-[var(--primary-600)]">
+                            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor"></path></svg>
+                        </div>
+                        <h2 class="text-slate-900 text-lg font-bold leading-tight tracking-tight">SATYA TRADERS</h2>
+                    </div>
+                </div>
+                <div class="flex flex-1 justify-end items-center gap-3">
+                    <div class="flex items-center gap-2 rounded-full bg-slate-100 p-1 text-sm font-semibold">
+                        <button class="rounded-full bg-white px-3 py-1 text-[var(--primary-600)]">EN</button>
+                        <button class="px-3 py-1 text-slate-500 hover:text-slate-700">HI</button>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-1">
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path></svg></button>
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg></button>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200 mx-1"></div>
+                    <div class="relative">
+                        <button class="group flex items-center gap-2">
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://placehold.co/100x100/7F9CF5/EBF4FF?text=AV");'></div>
+                            <svg class="text-slate-500 group-hover:text-[var(--primary-600)] hidden sm:block" fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,48,88H208a8,8,0,0,1,5.66,13.66Z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex flex-1">
+                <!-- SIDEBAR -->
+                <aside id="sidenav" class="w-64 flex-shrink-0 border-r border-slate-200 bg-white p-4 flex-col fixed lg:relative lg:flex h-full lg:translate-x-0 -translate-x-full transition-transform duration-300 ease-in-out z-20">
+                    <ul class="flex flex-col gap-2">
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path></svg><span>Dashboard</span></a></li>
+                        <li>
+                            <button class="sidenav-toggle flex items-center w-full gap-3 rounded-md px-3 py-2 text-sm font-semibold text-[var(--primary-600)] open">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M164.44,141.48,132,160V224a8,8,0,0,1-8,8H72a8,8,0,0,1-8-8V179.31l-41.44-25.8a8,8,0,0,1,0-13l88-55.05a8,8,0,0,1,8.88,0l88,55.05a8,8,0,0,1,0,13ZM128,93.31,52.44,136,80,151.31V120a8,8,0,0,1,8-8h80a8,8,0,0,1,8,8v40l-22.34-13.92a8,8,0,0,0-8.88,1.48Z"></path></svg>
+                                <span>Management</span>
+                            </button>
+                            <div class="sidenav-collapse show">
+                                <ul class="flex flex-col gap-1 mt-1">
+                                    <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="product_management.html">Product Management</a></li>
+                                    <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="vendor_management.html">Vendor Management</a></li>
+                                    <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#">Return Management</a></li>
+                                    <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-semibold bg-[var(--primary-50)] text-[var(--primary-700)]" href="#">Delivery Management</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M160,208H48a8,8,0,0,1-8-8V80a8,8,0,0,1,16,0v112H160a8,8,0,0,1,0,16ZM208,40H96a8,8,0,0,0-8,8V168a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V48A8,8,0,0,0,208,40Zm-8,120H104V56H200Z"></path></svg><span>Reports</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg><span>Support</span></a></li>
+                    </ul>
+                </aside>
+                
+                <!-- MAIN CONTENT -->
+                <main class="flex-1 overflow-y-auto p-4 md:p-8">
+                    <div class="max-w-7xl mx-auto space-y-8">
+                        <h1 class="text-3xl font-bold text-slate-900">Delivery Management</h1>
+                        
+                        <!-- Today's Deliveries -->
+                        <section class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                <h2 class="text-2xl font-semibold text-gray-900">Today's Deliveries</h2>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full table-auto">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Delivery ID</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Order ID</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Vendor</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Partner</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Delivery Date</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                                            <th class="px-6 py-3 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="todayDeliveriesBody" class="divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                        
+                        <!-- All Deliveries -->
+                        <section class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                            <h2 class="text-2xl font-semibold text-gray-900 mb-4">All Deliveries</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                                <input type="text" id="allDeliverySearch" placeholder="Search by ID, Vendor, Partner..." class="border border-slate-300 rounded-md px-3 py-2 w-full sm:w-64 focus:ring-[var(--primary-500)] focus:border-[var(--primary-500)]">
+                                <select id="allDeliveryStatus" class="border border-slate-300 rounded-md px-3 py-2">
+                                    <option value="">All Statuses</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Out For Delivery">Out for Delivery</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Failed">Failed</option>
+                                </select>
+                                <input type="date" id="allDeliveryDateStart" class="border border-slate-300 rounded-md px-3 py-2">
+                                <input type="date" id="allDeliveryDateEnd" class="border border-slate-300 rounded-md px-3 py-2">
+                                <button class="bg-slate-200 px-4 py-2 rounded-md hover:bg-slate-300 text-sm font-medium" onclick="resetAllFilters()">Reset</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full table-auto">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Delivery ID</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Order ID</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Vendor</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Partner</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Delivery Date</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                                            <th class="px-6 py-3 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="allDeliveriesBody" class="divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                            <div id="allDeliveriesPagination" class="py-4 flex justify-end"></div>
+                        </section>
+                        
+                        <!-- Delivery Agent Management -->
+                        <section class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Delivery Agent Management</h2>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full table-auto">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Agent ID</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Name</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Contact</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Current Status</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Blocked</th>
+                                            <th class="px-6 py-3 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="deliveryAgentBody" class="divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+            </div>
+            
+            <!-- FOOTER -->
+            <footer class="border-t border-slate-200 bg-white">
+                <div class="mx-auto max-w-7xl px-6 py-12">
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+                        <div class="md:col-span-4"><h3 class="text-lg font-semibold text-slate-900">About Satya Traders</h3><p class="mt-4 text-sm text-slate-500">Vendor-specific information and details about our platform. Your success is our priority.</p></div>
+                        <div class="md:col-span-2"><h4 class="text-base font-semibold text-slate-900">Quick Links</h4><ul class="mt-4 space-y-2 text-sm"><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Dashboard</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Products</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Orders</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Support</a></li></ul></div>
+                        <div class="md:col-span-6"><h4 class="text-base font-semibold text-slate-900">System Announcements</h4>
+                            <div class="mt-4 space-y-2">
+                                <textarea placeholder="Type a message to all vendors..." class="w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" rows="3"></textarea>
+                                <button class="rounded-md bg-[var(--primary-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)]" type="submit">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-12 border-t border-slate-200 pt-8 text-center text-sm text-slate-500">
+                        <p>© 2025 Satya Traders. All rights reserved.</p>
+                        <div class="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2">
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Privacy Policy</a>
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Terms of Service</a>
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Refund Policy</a>
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Shipping Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+        <!-- Delivery Detail Modal -->
+        <div id="deliveryDetailModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
+            <div class="modal-content bg-white rounded-lg w-full max-w-lg p-8 shadow-2xl max-h-[90vh] overflow-y-auto transform modal-enter">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-slate-900">Delivery Details</h3>
+                    <button onclick="closeDeliveryDetailModal()" class="text-slate-500 hover:text-[var(--primary-600)] transition-colors duration-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="deliveryDetailContent" class="text-sm space-y-6"></div>
+            </div>
+        </div>
+        
+        <!-- Agent Delivered Orders Modal -->
+        <div id="agentOrdersModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
+            <div class="modal-content bg-white rounded-lg w-full max-w-2xl p-8 shadow-2xl max-h-[90vh] overflow-y-auto transform modal-enter">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-slate-900" id="agentOrdersModalTitle">Delivered Orders</h3>
+                    <button onclick="closeAgentOrdersModal()" class="text-slate-500 hover:text-[var(--primary-600)] transition-colors duration-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <input type="text" id="agentOrdersSearch" placeholder="Search by Delivery No, Vendor, or Date..." class="border border-slate-300 rounded-md px-3 py-2 w-full focus:ring-[var(--primary-500)] focus:border-[var(--primary-500)]">
+                </div>
+                <div id="agentOrdersContent" class="text-sm space-y-6"></div>
+            </div>
+        </div>
+        
+        <!-- Block/Unblock Agent Modal -->
+        <div id="blockAgentModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg w-full max-w-sm p-6 shadow-lg">
+                <h3 class="text-xl font-semibold mb-4" id="blockAgentModalTitle">Confirm Agent Status Change</h3>
+                <p id="blockAgentModalMessage" class="mb-6"></p>
+                <div class="flex justify-end gap-4">
+                    <button class="px-4 py-2 border rounded-md hover:bg-gray-100" onclick="closeBlockAgentModal()">Cancel</button>
+                    <button id="blockAgentModalConfirmBtn" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reassign Delivery Modal -->
+        <div id="reassignDeliveryModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg w-full max-w-sm p-6 shadow-lg">
+                <h3 class="text-xl font-semibold mb-4">Reassign Delivery</h3>
+                <p class="mb-4">Select a delivery partner:</p>
+                <select id="reassignPartnerSelect" class="border border-slate-300 rounded-md px-3 py-2 w-full mb-4">
+                    <option value="">Select a partner</option>
+                </select>
+                <div class="flex justify-end gap-4">
+                    <button class="px-4 py-2 border rounded-md hover:bg-gray-100" onclick="closeReassignDeliveryModal()">Cancel</button>
+                    <button id="reassignDeliveryConfirmBtn" class="px-4 py-2 bg-[var(--primary-600)] text-white rounded-md hover:bg-[var(--primary-700)]">Reassign</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        /* --------- Mock Data ----------- */
+        const todayDeliveries = [
+            { id: 101, orderId: "ORD-31", vendor: "Acme", partner: "Soni", date: "2025-08-31", status: "Pending" },
+            { id: 102, orderId: "ORD-61", vendor: "GlobeX", partner: "Ravi", date: "2025-08-31", status: "Delivered" }
+        ];
+        const allDeliveries = [
+            { id: 101, orderId: "ORD-31", vendor: "Acme", partner: "Soni", date: "2025-08-31", status: "Pending" },
+            { id: 102, orderId: "ORD-61", vendor: "GlobeX", partner: "Ravi", date: "2025-08-31", status: "Delivered" },
+            { id: 103, orderId: "ORD-17", vendor: "Acme", partner: "Mohit", date: "2025-08-30", status: "Failed" }
+        ];
+        const deliveryAgents = [
+            { 
+                id: 201, 
+                name: "Ravi Kumar", 
+                contact: "9998745632", 
+                status: "OnDuty", 
+                blocked: false, 
+                deliveredOrders: [
+                    { orderId: "ORD-61", deliveryNo: "102", vendor: "GlobeX", date: "2025-08-31", status: "Delivered", detail: ["Assigned: 10:00", "Picked: 10:20", "Out for Delivery: 10:50", "Delivered: 11:30"] }
+                ] 
+            },
+            { 
+                id: 202, 
+                name: "Soni Singh", 
+                contact: "8884512999", 
+                status: "Offline", 
+                blocked: true, 
+                deliveredOrders: [
+                    { orderId: "ORD-31", deliveryNo: "101", vendor: "Acme", date: "2025-08-31", status: "Failed", detail: ["Assigned: 10:00", "Picked: 10:10", "Failed: 10:31 (No Contact)"] }
+                ] 
+            },
+            { 
+                id: 203, 
+                name: "Mohit Sharma", 
+                contact: "7771234567", 
+                status: "OnDuty", 
+                blocked: false, 
+                deliveredOrders: [
+                    { orderId: "ORD-17", deliveryNo: "103", vendor: "Acme", date: "2025-08-30", status: "Failed", detail: ["Assigned: 09:00", "Picked: 09:15", "Failed: 09:40 (No Contact)"] }
+                ] 
+            }
+        ];
+
+        /* -------- Render Functions -------- */
+        function renderTodayDeliveries() {
+            const tbody = document.getElementById('todayDeliveriesBody');
+            tbody.innerHTML = todayDeliveries.map(d => `
+                <tr class="hover:bg-gray-50" data-delivery-id="${d.id}">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.orderId}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.vendor}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.partner || '<span class="status-badge status-unassigned">Unassigned</span>'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${d.date}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="status-badge ${getStatusColor(d.status)}">${d.status}</span></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button onclick="showDeliveryModal(${d.id})" class="text-blue-600 hover:underline">View</button>
+                        ${d.status === "Pending" && d.partner ? `<button class="text-red-600 hover:underline ml-4" onclick="revokeDelivery(${d.id})">Revoke</button>` : ""}
+                        ${d.status === "Pending" && !d.partner ? `<button class="text-[var(--primary-600)] hover:underline ml-4" onclick="showReassignDeliveryModal(${d.id})">Reassign</button>` : ""}
+                    </td>
+                </tr>
+            `).join("");
+        }
+
+        function renderAllDeliveries() {
+            const search = document.getElementById('allDeliverySearch').value.toLowerCase();
+            const status = document.getElementById('allDeliveryStatus').value;
+            const dateStart = document.getElementById('allDeliveryDateStart').value;
+            const dateEnd = document.getElementById('allDeliveryDateEnd').value;
+            const tbody = document.getElementById('allDeliveriesBody');
+            tbody.innerHTML = allDeliveries.filter(d => (
+                (!search || d.vendor.toLowerCase().includes(search) || (d.partner && d.partner.toLowerCase().includes(search)) || d.orderId.toLowerCase().includes(search) || String(d.id).includes(search)) &&
+                (!status || d.status === status) &&
+                (!dateStart || d.date >= dateStart) &&
+                (!dateEnd || d.date <= dateEnd)
+            )).map(d => `
+                <tr class="hover:bg-gray-50" data-delivery-id="${d.id}">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.orderId}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.vendor}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.partner || '<span class="status-badge status-unassigned">Unassigned</span>'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${d.date}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="status-badge ${getStatusColor(d.status)}">${d.status}</span></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button onclick="showDeliveryModal(${d.id})" class="text-blue-600 hover:underline">View</button>
+                    </td>
+                </tr>
+            `).join("");
+        }
+
+        function renderAgents() {
+            const tbody = document.getElementById("deliveryAgentBody");
+            tbody.innerHTML = deliveryAgents.map(agent => `
+                <tr class="hover:bg-gray-50" data-agent-id="${agent.id}">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${agent.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${agent.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${agent.contact}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="status-badge ${agent.status === 'OnDuty' ? 'bg-green-100 text-green-800' : 'bg-slate-100 text-slate-800'}">${agent.status}</span></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold ${agent.blocked ? 'text-red-600' : 'text-green-600'}">${agent.blocked ? 'Blocked' : 'Active'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button onclick="confirmBlockAgent(${agent.id})" class="text-${agent.blocked ? 'green' : 'red'}-600 hover:underline">${agent.blocked ? 'Unblock' : 'Block'}</button>
+                        <button onclick="showAgentOrders(${agent.id})" class="text-indigo-600 hover:underline ml-4">View Delivered Orders</button>
+                    </td>
+                </tr>
+            `).join("");
+        }
+
+        function getStatusColor(status) {
+            if (status === "Delivered") return "status-delivered";
+            if (status === "Pending") return "status-pending";
+            if (status === "Failed") return "status-failed";
+            return "status-out-for-delivery";
+        }
+
+        /* -------- Modal Handling --------- */
+        function showDeliveryModal(id) {
+            const delivery = allDeliveries.find(d => d.id === id) || todayDeliveries.find(d => d.id === id);
+            const html = `
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-[var(--primary-600)] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                            </svg>
+                            <div>
+                                <span class="text-xs font-medium text-slate-500">Delivery ID</span>
+                                <p class="text-base font-semibold text-slate-900">${delivery.id}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-[var(--primary-600)] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                            <div>
+                                <span class="text-xs font-medium text-slate-500">Order ID</span>
+                                <p class="text-base font-semibold text-slate-900">${delivery.orderId}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-[var(--primary-600)] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                            <div>
+                                <span class="text-xs font-medium text-slate-500">Vendor</span>
+                                <p class="text-base font-semibold text-slate-900">${delivery.vendor}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-[var(--primary-600)] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                            <div>
+                                <span class="text-xs font-medium text-slate-500">Partner</span>
+                                <p class="text-base font-semibold text-slate-900">${delivery.partner || 'Unassigned'}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-[var(--primary-600)] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <div>
+                                <span class="text-xs font-medium text-slate-500">Date</span>
+                                <p class="text-base font-semibold text-slate-900">${delivery.date}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-[var(--primary-600)] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div>
+                                <span class="text-xs font-medium text-slate-500">Status</span>
+                                <p class="text-base"><span class="status-badge ${getStatusColor(delivery.status)}">${delivery.status}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-slate-900 mb-3">Timeline</h4>
+                        <ul class="relative pl-6 space-y-3">
+                            <li class="relative timeline-item text-sm text-slate-600">Assigned: 10:00</li>
+                            <li class="relative timeline-item text-sm text-slate-600">Picked: 10:15</li>
+                            ${delivery.status === "Out For Delivery" || delivery.status === "Delivered" ? `<li class="relative timeline-item text-sm text-slate-600">Out for Delivery: 10:35</li>` : ""}
+                            ${delivery.status === "Delivered" ? `<li class="relative timeline-item text-sm text-slate-600">Delivered: 11:15</li>` : ""}
+                            ${delivery.status === "Failed" ? `<li class="relative timeline-item text-sm text-red-600">Failed: 10:40 (Reason: No Contact)</li>` : ""}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            const modal = document.getElementById("deliveryDetailModal");
+            const modalContent = modal.querySelector('.modal-content');
+            document.getElementById("deliveryDetailContent").innerHTML = html;
+            modal.classList.remove("hidden");
+            setTimeout(() => modalContent.classList.add('modal-enter-active'), 10);
+        }
+
+        function closeDeliveryDetailModal() {
+            const modal = document.getElementById("deliveryDetailModal");
+            const modalContent = modal.querySelector('.modal-content');
+            modalContent.classList.remove('modal-enter-active');
+            setTimeout(() => modal.classList.add("hidden"), 200);
+        }
+
+        function showAgentOrders(agentId) {
+            const agent = deliveryAgents.find(a => a.id === agentId);
+            const searchInput = document.getElementById("agentOrdersSearch");
+            searchInput.value = ''; // Reset search input
+            document.getElementById("agentOrdersModalTitle").textContent = `${agent.name} - Delivered Orders`;
+
+            function renderAgentOrders(search = '') {
+                const searchLower = search.toLowerCase();
+                const filteredOrders = agent.deliveredOrders.filter(o => (
+                    o.deliveryNo.toLowerCase().includes(searchLower) ||
+                    o.vendor.toLowerCase().includes(searchLower) ||
+                    o.date.includes(searchLower)
+                ));
+                document.getElementById("agentOrdersContent").innerHTML = `
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full table-auto">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Delivery No</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Vendor</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                ${filteredOrders.map(o => `
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">${o.deliveryNo}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">${o.vendor}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${o.date}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm"><span class="status-badge ${getStatusColor(o.status)}">${o.status}</span></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    ${filteredOrders.map(o => `
+                        <div class="mt-6">
+                            <h4 class="text-lg font-semibold text-slate-900 mb-3">Timeline for Delivery ${o.deliveryNo}</h4>
+                            <ul class="relative pl-6 space-y-3">
+                                ${o.detail.map(step => `
+                                    <li class="relative timeline-item text-sm ${step.includes('Failed') ? 'text-red-600' : 'text-slate-600'}">${step}</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                `;
+            }
+
+            renderAgentOrders();
+            document.getElementById("agentOrdersSearch").oninput = () => renderAgentOrders(searchInput.value);
+            const modal = document.getElementById("agentOrdersModal");
+            const modalContent = modal.querySelector('.modal-content');
+            modal.classList.remove("hidden");
+            setTimeout(() => modalContent.classList.add('modal-enter-active'), 10);
+        }
+
+        function closeAgentOrdersModal() {
+            const modal = document.getElementById("agentOrdersModal");
+            const modalContent = modal.querySelector('.modal-content');
+            modalContent.classList.remove('modal-enter-active');
+            setTimeout(() => modal.classList.add("hidden"), 200);
+        }
+
+        function confirmBlockAgent(agentId) {
+            const agent = deliveryAgents.find(a => a.id === agentId);
+            document.getElementById('blockAgentModalTitle').textContent = (agent.blocked ? 'Unblock' : 'Block') + " Agent";
+            document.getElementById('blockAgentModalMessage').textContent = `Are you sure you want to ${agent.blocked ? 'unblock' : 'block'} "${agent.name}"? ${agent.blocked ? 'This will allow them to be assigned deliveries.' : 'This will prevent them from being assigned deliveries.'}`;
+            document.getElementById('blockAgentModalConfirmBtn').onclick = function() {
+                agent.blocked = !agent.blocked;
+                renderAgents();
+                closeBlockAgentModal();
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-md shadow-lg';
+                successMessage.textContent = `Agent "${agent.name}" has been ${agent.blocked ? 'blocked' : 'unblocked'} successfully.`;
+                document.body.appendChild(successMessage);
+                setTimeout(() => successMessage.remove(), 3000);
+            };
+            const modal = document.getElementById('blockAgentModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.querySelector('.bg-white').classList.add('modal-enter-active'), 10);
+        }
+
+        function closeBlockAgentModal() {
+            const modal = document.getElementById('blockAgentModal');
+            const modalContent = modal.querySelector('.bg-white');
+            modalContent.classList.remove('modal-enter-active');
+            setTimeout(() => modal.classList.add('hidden'), 200);
+        }
+
+        function showReassignDeliveryModal(deliveryId) {
+            const select = document.getElementById('reassignPartnerSelect');
+            select.innerHTML = '<option value="">Select a partner</option>' + 
+                deliveryAgents
+                    .filter(agent => !agent.blocked)
+                    .map(agent => `<option value="${agent.name}">${agent.name} (${agent.status})</option>`)
+                    .join("");
+            document.getElementById('reassignDeliveryConfirmBtn').onclick = function() {
+                const selectedPartner = select.value;
+                if (selectedPartner) {
+                    reassignDelivery(deliveryId, selectedPartner);
+                    closeReassignDeliveryModal();
+                } else {
+                    alert('Please select a delivery partner.');
+                }
+            };
+            const modal = document.getElementById('reassignDeliveryModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.querySelector('.bg-white').classList.add('modal-enter-active'), 10);
+        }
+
+        function closeReassignDeliveryModal() {
+            const modal = document.getElementById('reassignDeliveryModal');
+            const modalContent = modal.querySelector('.bg-white');
+            modalContent.classList.remove('modal-enter-active');
+            setTimeout(() => modal.classList.add('hidden'), 200);
+        }
+
+        /* -------- Revoke and Reassign Logic -------- */
+        function revokeDelivery(deliveryId) {
+            const delivery = todayDeliveries.find(d => d.id === deliveryId);
+            const allDelivery = allDeliveries.find(d => d.id === deliveryId);
+            if (delivery && delivery.status === "Pending") {
+                delivery.partner = null;
+                if (allDelivery) allDelivery.partner = null; // Sync with allDeliveries
+                renderTodayDeliveries();
+                renderAllDeliveries();
+            }
+        }
+
+        function reassignDelivery(deliveryId, partnerName) {
+            const delivery = todayDeliveries.find(d => d.id === deliveryId);
+            const allDelivery = allDeliveries.find(d => d.id === deliveryId);
+            if (delivery && delivery.status === "Pending") {
+                delivery.partner = partnerName;
+                if (allDelivery) allDelivery.partner = partnerName; // Sync with allDeliveries
+                renderTodayDeliveries();
+                renderAllDeliveries();
+            }
+        }
+
+        function resetAllFilters() {
+            document.getElementById('allDeliverySearch').value = '';
+            document.getElementById('allDeliveryStatus').value = '';
+            document.getElementById('allDeliveryDateStart').value = '';
+            document.getElementById('allDeliveryDateEnd').value = '';
+            renderAllDeliveries();
+        }
+
+        /* ----------- Events ---------- */
+        document.getElementById('allDeliverySearch').addEventListener('input', renderAllDeliveries);
+        document.getElementById('allDeliveryStatus').addEventListener('change', renderAllDeliveries);
+        document.getElementById('allDeliveryDateStart').addEventListener('change', renderAllDeliveries);
+        document.getElementById('allDeliveryDateEnd').addEventListener('change', renderAllDeliveries);
+
+        document.getElementById('hamburger-button').addEventListener('click', () => {
+            document.getElementById('sidenav').classList.toggle('-translate-x-full');
+        });
+
+        document.querySelector('.sidenav-toggle').addEventListener('click', function() {
+            this.classList.toggle('open');
+            this.nextElementSibling.classList.toggle('show');
+        });
+
+        /* ---------- Initialize ---------- */
+        renderTodayDeliveries();
+        renderAllDeliveries();
+        renderAgents();
+    </script>
+</body>
+</html>

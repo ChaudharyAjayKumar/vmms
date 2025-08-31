@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Hub - Billing - SATYA TRADERS</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary-50: #eef7ff;
+            --primary-100: #d8ecff;
+            --primary-200: #badfff;
+            --primary-300: #8ecfff;
+            --primary-400: #5bb2ff;
+            --primary-500: #338eff;
+            --primary-600: #0d7ff2;
+            --primary-700: #0060d1;
+            --primary-800: #0852b4;
+            --primary-900: #0b448a;
+            --primary-950: #0c2b54;
+        }
+        .payment-row {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans">
+    <div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- HEADER -->
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-4 sm:px-10 py-3 shadow-sm sticky top-0 z-30">
+                <div class="flex items-center gap-4">
+                    <button id="hamburger-button" class="flex lg:hidden size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div class="hidden sm:flex items-center gap-4 text-[#111418]">
+                         <div class="size-6 text-[var(--primary-600)]">
+                             <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor"></path></svg>
+                         </div>
+                         <h2 class="text-slate-900 text-lg font-bold leading-tight tracking-tight">SATYA TRADERS</h2>
+                     </div>
+                </div>
+                <div class="flex flex-1 justify-end items-center gap-3">
+                    <div class="flex items-center gap-2 rounded-full bg-slate-100 p-1 text-sm font-semibold">
+                        <button class="rounded-full bg-white px-3 py-1 text-[var(--primary-600)]">EN</button>
+                        <button class="px-3 py-1 text-slate-500 hover:text-slate-700">HI</button>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-1">
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path></svg></button>
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16h18L59.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,152,204a28,28,0,1,0,28-28H83.17a8,8,0,0,1-7.87-6.57L72.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,222.14,58.87ZM96,204a12,12,0,1,1-12-12A12,12,0,0,1,96,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,192,204Zm4-74.57A8,8,0,0,1,188.1,136H69.22L57.59,72H206.41Z"></path></svg></button>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200 mx-1"></div>
+                    <div class="relative">
+                        <button class="group flex items-center gap-2">
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://placehold.co/100x100/7F9CF5/EBF4FF?text=AV");'></div>
+                            <svg class="text-slate-500 group-hover:text-[var(--primary-600)] hidden sm:block" fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,48,88H208a8,8,0,0,1,5.66,13.66Z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex flex-1">
+                <!-- SIDEBAR -->
+                <aside id="sidenav" class="w-64 flex-shrink-0 border-r border-slate-200 bg-white p-4 flex-col fixed lg:relative lg:flex h-full lg:h-auto -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-20">
+                    <ul class="flex flex-col gap-2">
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path></svg><span>Dashboard</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"></path></svg><span>Products</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"></path></svg><span>Orders</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"></path></svg><span>Returns</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md bg-[var(--primary-50)] px-3 py-2 text-sm font-semibold text-[var(--primary-600)]" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M208,24H48A24,24,0,0,0,24,48V208a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V48A24,24,0,0,0,208,24Zm8,184a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V48a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8ZM108,100a12,12,0,1,1-12-12A12,12,0,0,1,108,100Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,148,100Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,188,100Zm-88,28H88a8,8,0,0,0-8,8v40a8,8,0,0,0,8,8h24a8,8,0,0,0,8-8V136A8,8,0,0,0,112,128Zm-8,40H96V144h8Zm48-40a8,8,0,0,0-8,8v40a8,8,0,0,0,16,0V136A8,8,0,0,0,152,128Zm40,8a8,8,0,0,0-8,8v16a8,8,0,0,0,16,0V144A8,8,0,0,0,192,136Z"></path></svg><span>Billing</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg><span>Support</span></a></li>
+                    </ul>
+                </aside>
+                
+                <!-- MAIN CONTENT -->
+                <main id="page-content" class="flex-1 overflow-y-auto p-4 md:p-8">
+                    <div class="max-w-7xl mx-auto space-y-8">
+                        
+                        <!-- Section 1: Pay For Cart -->
+                        <section id="pay-for-cart" class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                            <h2 class="text-2xl font-bold text-slate-900 mb-4">Pay For Cart</h2>
+                            <div class="overflow-x-auto mb-4">
+                                <table class="min-w-full text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">S.No</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Item Name</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Unit Price</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Quantity</th>
+                                            <th class="px-4 py-2 text-right font-medium text-slate-600">Line Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cart-items-body" class="divide-y divide-slate-200">
+                                        <!-- Cart items will be injected here by JS -->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="font-bold">
+                                            <td colspan="4" class="px-4 py-3 text-right text-slate-800">Total Cart Amount:</td>
+                                            <td id="cart-total" class="px-4 py-3 text-right text-slate-900"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-6 mt-6">
+                                <div>
+                                    <h3 class="font-semibold text-slate-800 mb-2">Payment Type</h3>
+                                    <div class="flex items-center gap-4">
+                                        <label class="flex items-center"><input type="radio" name="cart-payment-type" value="full" class="form-radio text-[var(--primary-600)]" checked> <span class="ml-2 text-slate-700">Full Payment</span></label>
+                                        <label class="flex items-center"><input type="radio" name="cart-payment-type" value="partial" class="form-radio text-[var(--primary-600)]"> <span class="ml-2 text-slate-700">Partial Payment</span></label>
+                                    </div>
+                                    <div id="cart-partial-payment-section" class="mt-4 hidden">
+                                        <label for="cart-partial-amount" class="block text-sm font-medium text-slate-700">Enter Amount</label>
+                                        <input type="number" id="cart-partial-amount" class="mt-1 w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" placeholder="e.g., 500.00">
+                                        <p class="text-sm text-slate-500 mt-2">Remaining Due: <span id="cart-remaining-due" class="font-semibold text-red-600"></span></p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-slate-800 mb-2">Payment Mode</h3>
+                                    <div class="flex items-center gap-4">
+                                        <label class="flex items-center"><input type="radio" name="cart-payment-mode" value="UPI" class="form-radio text-[var(--primary-600)]" checked> <span class="ml-2 text-slate-700">UPI</span></label>
+                                        <label class="flex items-center"><input type="radio" name="cart-payment-mode" value="Cash" class="form-radio text-[var(--primary-600)]"> <span class="ml-2 text-slate-700">Cash</span></label>
+                                        <label class="flex items-center"><input type="radio" name="cart-payment-mode" value="Card" class="form-radio text-[var(--primary-600)]"> <span class="ml-2 text-slate-700">Card</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6 text-right">
+                                <button class="rounded-md bg-[var(--primary-600)] px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)]">Pay Now</button>
+                            </div>
+                        </section>
+
+                        <!-- Section 2: Pay Old Dues / Last Bill -->
+                        <section id="pay-old-dues" class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                            <h2 class="text-2xl font-bold text-slate-900 mb-4">Pay Old Dues</h2>
+                            <p class="text-lg text-slate-600 mb-4">Total Outstanding Dues: <span id="total-outstanding-dues" class="font-bold text-red-600"></span></p>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Bill No</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Due Left</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Last Payment</th>
+                                            <th class="px-4 py-2 text-center font-medium text-slate-600">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dues-table-body" class="divide-y divide-slate-200">
+                                        <!-- Dues rows will be generated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+
+                        <!-- Section 3: Bill History -->
+                        <section id="bill-history" class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                            <h2 class="text-2xl font-bold text-slate-900 mb-4">Bill History</h2>
+                            <div class="flex flex-wrap items-center gap-4 mb-4">
+                                <label for="from-date" class="text-sm font-medium text-slate-700">From:</label>
+                                <input type="date" id="from-date" class="rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                                <label for="to-date" class="text-sm font-medium text-slate-700">To:</label>
+                                <input type="date" id="to-date" class="rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                            </div>
+                             <div class="overflow-x-auto">
+                                <table class="min-w-full text-sm">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Bill No</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Date</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Total Bill Amount</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Payment Type</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Outstanding Due</th>
+                                            <th class="px-4 py-2 text-left font-medium text-slate-600">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bill-history-body" class="divide-y divide-slate-200">
+                                        <!-- Bill history rows will be injected by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                    </div>
+                </main>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="border-t border-slate-200 bg-white">
+                <div class="mx-auto max-w-7xl px-6 py-12">
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+                        <div class="md:col-span-4"><h3 class="text-lg font-semibold text-slate-900">About Satya Traders</h3><p class="mt-4 text-sm text-slate-500">Vendor-specific information and details about our platform. Your success is our priority.</p></div>
+                        <div class="md:col-span-2"><h4 class="text-base font-semibold text-slate-900">Quick Links</h4><ul class="mt-4 space-y-2 text-sm"><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Dashboard</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Products</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Orders</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Support</a></li></ul></div>
+                        <div class="md:col-span-6"><h4 class="text-base font-semibold text-slate-900">Newsletter</h4><form class="mt-4 flex flex-col gap-4 sm:flex-row"><input class="flex-grow rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" placeholder="Name" type="text" /><input class="flex-grow rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" placeholder="Mobile Number" type="text" /><button class="rounded-md bg-[var(--primary-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)]" type="submit">Subscribe</button></form></div>
+                    </div>
+                    <div class="mt-12 border-t border-slate-200 pt-8 text-center text-sm text-slate-500">
+                        <p>© 2025 Satya Traders. All rights reserved.</p>
+                        <div class="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2">
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Privacy Policy</a>
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Terms of Service</a>
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Refund Policy</a>
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Shipping Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+        <!-- Details Modal -->
+        <div id="details-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden z-40 p-4">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+                <div class="flex justify-between items-center p-4 border-b">
+                    <h2 class="text-xl font-bold text-slate-900">Bill Details</h2>
+                    <button id="close-modal-btn" class="text-slate-500 hover:text-slate-800 text-2xl font-bold">&times;</button>
+                </div>
+                <div id="modal-content-body" class="overflow-y-auto p-6 space-y-6">
+                   <!-- Styled receipt content will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- MOCK DATA ---
+        const cartData = {
+            items: [
+                { name: 'Rice 25kg Bag', price: 900.00, qty: 2 },
+                { name: 'Sunflower Oil 5L Can', price: 650.00, qty: 3 },
+                { name: 'Flour 10kg', price: 350.00, qty: 5 },
+            ],
+            calculateTotal: function() {
+                return this.items.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            }
+        };
+
+        const allDuesData = [
+             { 
+                billNo: '20240816-004', 
+                date: '2025-08-16', 
+                total: 2500.00, 
+                items: [
+                    { name: 'Rice 25kg', price: 900.00, qty: 2 },
+                    { name: 'Flour 10kg', price: 350.00, qty: 2 },
+                ],
+                payments: [
+                    { date: '2025-08-16T12:50:00Z', mode: 'UPI', amount: 1000.00 },
+                ] 
+            },
+            { 
+                billNo: '20240812-002', 
+                date: '2025-08-12', 
+                total: 4500.00, 
+                items: [
+                    { name: 'Cooking Oil 15L', price: 2200.00, qty: 1 },
+                    { name: 'Sugar 50kg Bag', price: 2300.00, qty: 1 },
+                ],
+                payments: [
+                    { date: '2025-08-12T10:00:00Z', mode: 'Cash', amount: 2000.00 },
+                    { date: '2025-08-14T15:30:00Z', mode: 'Online', amount: 1000.00 },
+                ] 
+            }
+        ];
+        
+        const billHistoryData = [
+             { billNo: '20240816-004', date: '2025-08-16', total: 2500.00, status: 'Due', due: 1500.00 },
+             { billNo: '20240815-001', date: '2025-08-15', total: 1850.00, status: 'Paid', due: 0.00 },
+             { billNo: '20240730-007', date: '2025-07-30', total: 3200.00, status: 'Paid', due: 0.00 },
+             { billNo: '20240712-003', date: '2025-07-12', total: 500.00, status: 'Paid', due: 0.00 },
+        ];
+
+
+        // --- DOM ELEMENTS ---
+        const cartItemsBody = document.getElementById('cart-items-body');
+        const cartTotalEl = document.getElementById('cart-total');
+        const cartPartialSection = document.getElementById('cart-partial-payment-section');
+        const cartPartialAmountInput = document.getElementById('cart-partial-amount');
+        const cartRemainingDueEl = document.getElementById('cart-remaining-due');
+        
+        const totalOutstandingDuesEl = document.getElementById('total-outstanding-dues');
+        const duesTableBody = document.getElementById('dues-table-body');
+        
+        const billHistoryBody = document.getElementById('bill-history-body');
+        const fromDateInput = document.getElementById('from-date');
+        const toDateInput = document.getElementById('to-date');
+
+        const detailsModal = document.getElementById('details-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const modalContentBody = document.getElementById('modal-content-body');
+
+        // --- FUNCTIONS ---
+        
+        // Section 1: Pay for Cart
+        function renderCart() {
+            cartItemsBody.innerHTML = cartData.items.map((item, index) => `
+                <tr class="text-slate-700">
+                    <td class="px-4 py-3">${index + 1}</td>
+                    <td class="px-4 py-3">${item.name}</td>
+                    <td class="px-4 py-3">₹${item.price.toFixed(2)}</td>
+                    <td class="px-4 py-3">${item.qty}</td>
+                    <td class="px-4 py-3 text-right">₹${(item.price * item.qty).toFixed(2)}</td>
+                </tr>
+            `).join('');
+            const total = cartData.calculateTotal();
+            cartTotalEl.textContent = `₹${total.toFixed(2)}`;
+            cartRemainingDueEl.textContent = `₹${total.toFixed(2)}`;
+        }
+
+        function handleCartPaymentTypeChange(e) {
+            if (e.target.value === 'partial') {
+                cartPartialSection.classList.remove('hidden');
+                cartPartialAmountInput.value = '';
+                updateCartRemainingDue();
+            } else {
+                cartPartialSection.classList.add('hidden');
+            }
+        }
+        
+        function updateCartRemainingDue() {
+             const total = cartData.calculateTotal();
+             const partialAmount = parseFloat(cartPartialAmountInput.value) || 0;
+             const remaining = total - partialAmount;
+             cartRemainingDueEl.textContent = `₹${remaining.toFixed(2)}`;
+        }
+
+        // Section 2: Pay Old Dues
+        function renderDuesTable() {
+            const totalDues = allDuesData.reduce((acc, bill) => {
+                const paid = bill.payments.reduce((pAcc, p) => pAcc + p.amount, 0);
+                return acc + (bill.total - paid);
+            }, 0);
+            totalOutstandingDuesEl.textContent = `₹${totalDues.toFixed(2)}`;
+
+            duesTableBody.innerHTML = allDuesData.map(bill => {
+                const paid = bill.payments.reduce((pAcc, p) => pAcc + p.amount, 0);
+                const dueLeft = bill.total - paid;
+                if (dueLeft <= 0) return ''; // Don't show fully paid bills here
+
+                const lastPayment = bill.payments.length > 0 ? new Date(bill.payments[bill.payments.length - 1].date).toLocaleDateString('en-IN') : 'N/A';
+                
+                return `
+                    <tr class="text-slate-700">
+                        <td class="px-4 py-3">${bill.billNo}</td>
+                        <td class="px-4 py-3 font-medium text-red-600">₹${dueLeft.toFixed(2)}</td>
+                        <td class="px-4 py-3">${lastPayment}</td>
+                        <td class="px-4 py-3 text-center">
+                            <button class="font-medium text-[var(--primary-600)] hover:underline pay-now-btn" data-bill-no="${bill.billNo}">Pay Now</button>
+                            <button class="font-medium text-slate-600 hover:underline ml-4 details-btn" data-bill-no="${bill.billNo}">Details</button>
+                        </td>
+                    </tr>
+                    <tr id="payment-row-${bill.billNo}" class="hidden payment-row">
+                        <td colspan="4" class="p-4 bg-slate-50">
+                             <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h3 class="font-semibold text-slate-800 mb-2">Payment Type</h3>
+                                    <div class="flex items-center gap-4">
+                                        <label class="flex items-center"><input type="radio" name="dues-payment-type-${bill.billNo}" value="full" class="form-radio text-[var(--primary-600)]" checked> <span class="ml-2 text-slate-700">Full Payment</span></label>
+                                        <label class="flex items-center"><input type="radio" name="dues-payment-type-${bill.billNo}" value="partial" class="form-radio text-[var(--primary-600)]"> <span class="ml-2 text-slate-700">Partial Payment</span></label>
+                                    </div>
+                                    <div id="dues-partial-section-${bill.billNo}" class="mt-4 hidden">
+                                        <label class="block text-sm font-medium text-slate-700">Enter Amount</label>
+                                        <input type="number" data-due-left="${dueLeft}" class="mt-1 w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)] partial-due-input" placeholder="e.g., ${dueLeft.toFixed(2)}">
+                                        <p class="text-sm text-slate-500 mt-2">New Outstanding Due: <span class="font-semibold text-red-600 new-outstanding-due">₹${dueLeft.toFixed(2)}</span></p>
+                                    </div>
+                                </div>
+                                 <div>
+                                    <h3 class="font-semibold text-slate-800 mb-2">Payment Mode</h3>
+                                    <div class="flex items-center gap-4">
+                                       <label class="flex items-center"><input type="radio" name="dues-payment-mode-${bill.billNo}" value="Online" class="form-radio text-[var(--primary-600)]" checked> <span class="ml-2 text-slate-700">Online</span></label>
+                                        <label class="flex items-center"><input type="radio" name="dues-payment-mode-${bill.billNo}" value="Cash" class="form-radio text-[var(--primary-600)]"> <span class="ml-2 text-slate-700">Cash</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-right">
+                                <button class="rounded-md bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-300 cancel-payment-btn" data-bill-no="${bill.billNo}">Cancel</button>
+                                <button class="rounded-md bg-[var(--primary-600)] px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)] ml-2">Submit Payment</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Section 3: Bill History
+        function renderBillHistory() {
+            const fromDate = fromDateInput.value ? new Date(fromDateInput.value) : null;
+            const toDate = toDateInput.value ? new Date(toDateInput.value) : null;
+            if(fromDate) fromDate.setHours(0,0,0,0);
+            if(toDate) toDate.setHours(23,59,59,999);
+
+            const filteredBills = billHistoryData.filter(bill => {
+                const billDate = new Date(bill.date);
+                if (fromDate && billDate < fromDate) return false;
+                if (toDate && billDate > toDate) return false;
+                return true;
+            });
+
+            billHistoryBody.innerHTML = filteredBills.map(bill => `
+                 <tr class="text-slate-700">
+                    <td class="px-4 py-3">${bill.billNo}</td>
+                    <td class="px-4 py-3">${new Date(bill.date).toLocaleDateString('en-IN')}</td>
+                    <td class="px-4 py-3">₹${bill.total.toFixed(2)}</td>
+                    <td class="px-4 py-3"><span class="px-2 py-1 text-xs rounded-full ${bill.status === 'Paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${bill.status}</span></td>
+                    <td class="px-4 py-3 ${bill.due > 0 ? 'text-red-600 font-medium' : ''}">₹${bill.due.toFixed(2)}</td>
+                    <td class="px-4 py-3"><button class="font-medium text-[var(--primary-600)] hover:underline">Download Bill</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function populateDetailsModal(bill) {
+            const totalBill = bill.items.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            let paidAmount = 0;
+
+            const itemsHtml = bill.items.map((it, i) => `
+                <tr class="border-b">
+                    <td class="py-2 text-slate-600">${i + 1}</td>
+                    <td class="py-2 text-slate-800 font-medium">${it.name}</td>
+                    <td class="py-2 text-slate-600 text-center">${it.qty}</td>
+                    <td class="py-2 text-slate-600 text-right">₹${it.price.toFixed(2)}</td>
+                    <td class="py-2 text-slate-800 font-medium text-right">₹${(it.price * it.qty).toFixed(2)}</td>
+                </tr>
+            `).join('');
+
+            const paymentsHtml = bill.payments.map(p => {
+                paidAmount += p.amount;
+                const dueAfter = totalBill - paidAmount;
+                return `
+                    <tr class="border-b">
+                        <td class="py-2 text-slate-600">${new Date(p.date).toLocaleString('en-IN')}</td>
+                        <td class="py-2 text-slate-600">${p.mode}</td>
+                        <td class="py-2 text-slate-800 font-medium text-right">₹${p.amount.toFixed(2)}</td>
+                        <td class="py-2 text-slate-600 text-right">₹${dueAfter.toFixed(2)}</td>
+                    </tr>
+                `
+            }).join('');
+            
+            const finalStatus = totalBill - paidAmount <= 0;
+
+            modalContentBody.innerHTML = `
+                <div class="space-y-4">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-slate-900">Vendor Hub Ltd.</h3>
+                        <p class="text-sm text-slate-500">Payment Receipt</p>
+                    </div>
+                    <div class="border-t border-b py-2 text-sm grid grid-cols-2 gap-x-4">
+                        <p><span class="font-semibold text-slate-700">Order ID:</span> ${bill.billNo}</p>
+                        <p><span class="font-semibold text-slate-700">Vendor:</span> SATYA TRADERS</p>
+                        <p><span class="font-semibold text-slate-700">Order Date:</span> ${new Date(bill.date).toLocaleString('en-IN')}</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-slate-800 mb-2">Items Purchased</h4>
+                        <table class="w-full text-sm">
+                            <thead><tr class="border-b"><th class="py-1 text-left">S.No</th><th class="py-1 text-left">Item</th><th class="py-1 text-center">Qty</th><th class="py-1 text-right">Price</th><th class="py-1 text-right">Total</th></tr></thead>
+                            <tbody>${itemsHtml}</tbody>
+                        </table>
+                    </div>
+                     <div class="text-right font-bold text-lg text-slate-900">
+                        Total: ₹${totalBill.toFixed(2)}
+                    </div>
+                     <div>
+                        <h4 class="font-semibold text-slate-800 mb-2">Payments</h4>
+                        <table class="w-full text-sm">
+                            <thead><tr class="border-b"><th class="py-1 text-left">Date</th><th class="py-1 text-left">Mode</th><th class="py-1 text-right">Paid</th><th class="py-1 text-right">Due After</th></tr></thead>
+                            <tbody>${paymentsHtml}</tbody>
+                        </table>
+                    </div>
+                    <div class="text-center p-4 rounded-lg ${finalStatus ? 'bg-green-100' : 'bg-red-100'}">
+                        <p class="font-semibold ${finalStatus ? 'text-green-800' : 'text-red-800'}">
+                            Order Status: ${finalStatus ? 'Fully Paid' : 'Partial Paid'}
+                        </p>
+                    </div>
+                </div>
+            `;
+            detailsModal.classList.remove('hidden');
+        }
+
+
+        // --- EVENT LISTENERS ---
+        document.querySelectorAll('input[name="cart-payment-type"]').forEach(radio => radio.addEventListener('change', handleCartPaymentTypeChange));
+        cartPartialAmountInput.addEventListener('input', updateCartRemainingDue);
+        
+        duesTableBody.addEventListener('change', e => {
+            if (e.target.matches('input[type="radio"][name^="dues-payment-type-"]')) {
+                const radio = e.target;
+                const billNo = radio.name.replace('dues-payment-type-', '');
+                const paymentRow = document.getElementById(`payment-row-${billNo}`);
+                if (!paymentRow) return;
+
+                const partialSection = paymentRow.querySelector(`#dues-partial-section-${billNo}`);
+                if (!partialSection) return;
+
+                if (radio.value === 'partial') {
+                    partialSection.classList.remove('hidden');
+                } else {
+                    partialSection.classList.add('hidden');
+                }
+            }
+        });
+        
+        duesTableBody.addEventListener('input', e => {
+            if (e.target.classList.contains('partial-due-input')) {
+                const input = e.target;
+                const totalDue = parseFloat(input.dataset.dueLeft);
+                const partialAmount = parseFloat(input.value) || 0;
+                const remaining = totalDue - partialAmount;
+                
+                const partialSection = input.closest('[id^="dues-partial-section-"]');
+                if (partialSection) {
+                    const dueSpan = partialSection.querySelector('.new-outstanding-due');
+                    if (dueSpan) {
+                        dueSpan.textContent = `₹${remaining.toFixed(2)}`;
+                    }
+                }
+            }
+        });
+
+        duesTableBody.addEventListener('click', e => {
+            if (e.target.classList.contains('pay-now-btn')) {
+                const billNo = e.target.dataset.billNo;
+                document.getElementById(`payment-row-${billNo}`).classList.toggle('hidden');
+            }
+             if (e.target.classList.contains('cancel-payment-btn')) {
+                const billNo = e.target.dataset.billNo;
+                document.getElementById(`payment-row-${billNo}`).classList.add('hidden');
+            }
+            if (e.target.classList.contains('details-btn')) {
+                const billNo = e.target.dataset.billNo;
+                const bill = allDuesData.find(b => b.billNo === billNo);
+                if (bill) {
+                    populateDetailsModal(bill);
+                }
+            }
+        });
+        
+        closeModalBtn.addEventListener('click', () => detailsModal.classList.add('hidden'));
+        detailsModal.addEventListener('click', (e) => {
+            if(e.target === detailsModal) detailsModal.classList.add('hidden');
+        });
+
+        fromDateInput.addEventListener('change', renderBillHistory);
+        toDateInput.addEventListener('change', renderBillHistory);
+        
+        // Hamburger Menu
+        document.getElementById('hamburger-button').addEventListener('click', () => {
+             document.getElementById('sidenav').classList.toggle('-translate-x-full');
+        });
+
+        // --- INITIAL RENDER ---
+        renderCart();
+        renderDuesTable();
+        renderBillHistory();
+    });
+    </script>
+</body>
+</html>
+
+

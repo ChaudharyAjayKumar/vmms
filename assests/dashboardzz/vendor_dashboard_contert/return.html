@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Returns - SATYA TRADERS</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary-50: #eef7ff;
+            --primary-100: #d8ecff;
+            --primary-200: #badfff;
+            --primary-300: #8ecfff;
+            --primary-400: #5bb2ff;
+            --primary-500: #338eff;
+            --primary-600: #0d7ff2;
+            --primary-700: #0060d1;
+            --primary-800: #0852b4;
+            --primary-900: #0b448a;
+            --primary-950: #0c2b54;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: capitalize;
+        }
+        .status-pending { background-color: #fef9c3; color: #854d0e; }
+        .status-approved { background-color: #d1fae5; color: #065f46; }
+        .status-rejected { background-color: #fee2e2; color: #991b1b; }
+        .status-refunded { background-color: #dbeafe; color: #1e40af; }
+
+        @media (max-width: 768px) {
+            .returns-table thead { display: none; }
+            .returns-table, .returns-table tbody, .returns-table tr, .returns-table td {
+                display: block;
+                width: 100%;
+            }
+            .returns-table tr {
+                margin-bottom: 1rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 0.5rem;
+                padding: 1rem;
+                background-color: #ffffff;
+            }
+            .returns-table td {
+                padding: 0.75rem 0;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .returns-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 0.5rem;
+                text-transform: capitalize;
+            }
+            .returns-table td:last-child {
+                justify-content: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans">
+    <div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- HEADER -->
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 px-10 py-4 shadow-sm relative bg-white">
+                <div class="flex items-center gap-4">
+                    <button id="hamburger-button" class="flex lg:hidden size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
+                    <div class="size-6 text-[var(--primary-600)]">
+                        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path></svg>
+                    </div>
+                    <h2 class="text-xl font-bold tracking-tight text-slate-900">SATYA TRADERS</h2>
+                </div>
+                <div class="flex items-center justify-end gap-3 ml-auto">
+                    <div class="flex items-center gap-2">
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path></svg></button>
+                    </div>
+                    <div class="h-10 w-px bg-slate-200 mx-2"></div>
+                    <div class="relative">
+                        <button class="group flex items-center gap-2">
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://placehold.co/100x100/7F9CF5/EBF4FF?text=AV");'></div>
+                            <svg class="text-slate-500 group-hover:text-[var(--primary-600)]" fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,48,88H208a8,8,0,0,1,5.66,13.66Z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex flex-1">
+                <aside id="sidenav" class="w-64 flex-shrink-0 border-r border-slate-200 bg-white p-4 flex-col fixed lg:relative lg:flex h-full lg:h-auto -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-20">
+                    <ul class="flex flex-col gap-2">
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path></svg><span>Dashboard</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"></path></svg><span>Products</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"></path></svg><span>Orders</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md bg-[var(--primary-50)] px-3 py-2 text-sm font-semibold text-[var(--primary-600)]" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"></path></svg><span>Returns</span></a></li>
+                    </ul>
+                </aside>
+                <main id="page-content" class="flex-1 overflow-y-auto p-4 md:p-8">
+                    <!-- Dynamic content will be injected here -->
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pageContent = document.getElementById('page-content');
+            
+            const returnsListHTML = `
+                <div class="max-w-7xl mx-auto">
+                    <header class="mb-8">
+                        <h1 class="text-3xl font-bold tracking-tight text-slate-900">My Returns</h1>
+                        <p class="text-slate-500 mt-1">Track and manage all your return requests in one place.</p>
+                    </header>
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 mb-8 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+                        <div class="flex flex-wrap items-center gap-4">
+                            <select id="status-filter" class="rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                                <option value="all">All Statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                                <option value="refunded">Refunded</option>
+                            </select>
+                            <input type="date" id="start-date" class="rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                            <input type="date" id="end-date" class="rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                        </div>
+                        <button id="raise-return-btn" class="rounded-md bg-[var(--primary-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)] flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                            Raise New Return
+                        </button>
+                    </div>
+                    <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+                        <table class="min-w-full returns-table">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Return ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Order ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Item Details</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Reason</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Amount</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="returns-tbody" class="divide-y divide-slate-200">
+                                <tr data-order-id="#ORD-123" data-items="Product A (x1), Product B (x2)" data-amount="$75.00">
+                                    <td data-label="Return ID" class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">#RTN-001</td>
+                                    <td data-label="Order ID" class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">#ORD-123</td>
+                                    <td data-label="Date" class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">2025-08-28</td>
+                                    <td data-label="Status" class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-pending">Pending</span></td>
+                                    <td data-label="Item Details" class="px-6 py-4 text-sm text-slate-700">Product A (x1), Product B (x2)</td>
+                                    <td data-label="Reason" class="px-6 py-4 text-sm text-slate-500">Damaged Item</td>
+                                    <td data-label="Amount" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">$75.00</td>
+                                    <td data-label="Actions" class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-[var(--primary-600)] hover:text-[var(--primary-800)]">View</a><a href="#" class="text-red-600 hover:text-red-800 ml-4">Cancel</a></td>
+                                </tr>
+                                <tr data-order-id="#ORD-124" data-items="Product C (x1)" data-amount="$25.50">
+                                    <td data-label="Return ID" class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">#RTN-002</td>
+                                    <td data-label="Order ID" class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">#ORD-124</td>
+                                    <td data-label="Date" class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">2025-08-27</td>
+                                    <td data-label="Status" class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-approved">Approved</span></td>
+                                    <td data-label="Item Details" class="px-6 py-4 text-sm text-slate-700">Product C (x1)</td>
+                                    <td data-label="Reason" class="px-6 py-4 text-sm text-slate-500">Wrong Item</td>
+                                    <td data-label="Amount" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">$25.50</td>
+                                    <td data-label="Actions" class="px-6 py-4 whitespace-nowrap text-sm font-medium"><a href="#" class="text-[var(--primary-600)] hover:text-[var(--primary-800)]">View</a></td>
+                                </tr>
+                                <tr id="no-results-row" class="hidden"><td colspan="8" class="text-center py-10 text-slate-500"><p class="text-lg">No returns found.</p></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            const raiseReturnFormHTML = `
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                        <h1 class="text-3xl font-bold text-slate-900">Raise New Return</h1>
+                        <button id="back-to-returns-btn" class="rounded-md bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-300">Back to Returns List</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                        <div class="max-w-md mb-6">
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Order ID</label>
+                            <input placeholder="Search for order ID" class="w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" value=""/>
+                        </div>
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">Order Details</h2>
+                        <div class="overflow-x-auto mb-6"><table class="w-full">
+                            <thead><tr class="border-b border-slate-200"><th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Item</th><th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Name</th><th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Price</th><th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Quantity</th></tr></thead>
+                            <tbody>
+                                <tr class="border-b border-slate-200"><td class="py-3 px-4"><div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12" style='background-image: url("https://placehold.co/100x100/7F9CF5/EBF4FF?text=Item1");'></div></td><td class="py-3 px-4 text-slate-800">Tech Gadget X1</td><td class="py-3 px-4 text-slate-500">$199.99</td><td class="py-3 px-4 text-slate-500">2</td></tr>
+                                <tr class="border-b border-slate-200"><td class="py-3 px-4"><div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12" style='background-image: url("https://placehold.co/100x100/FBBF24/92400E?text=Item2");'></div></td><td class="py-3 px-4 text-slate-800">Wireless Headphones Pro</td><td class="py-3 px-4 text-slate-500">$149.99</td><td class="py-3 px-4 text-slate-500">1</td></tr>
+                            </tbody>
+                        </table></div>
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">Select Items for Return</h2>
+                        <div class="overflow-x-auto mb-6"><table class="w-full">
+                            <thead><tr class="border-b border-slate-200"><th class="px-4 py-2 w-16"></th><th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Item</th><th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Name</th><th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Quantity to Return</th></tr></thead>
+                            <tbody id="return-items-tbody">
+                                <tr class="border-b border-slate-200" data-original-quantity="2">
+                                    <td class="py-3 px-4 text-center align-middle"><input type="checkbox" class="h-5 w-5 rounded border-slate-400 text-[var(--primary-600)] focus:ring-[var(--primary-500)]"/></td>
+                                    <td class="py-3 px-4 align-middle"><div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12" style='background-image: url("https://placehold.co/100x100/7F9CF5/EBF4FF?text=Item1");'></div></td>
+                                    <td class="py-3 px-4 text-slate-800 align-middle">Tech Gadget X1</td>
+                                    <td class="py-3 px-4 text-slate-500 align-middle">
+                                        <input type="number" value="1" min="0" max="2" class="w-24 rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)] return-quantity-input">
+                                        <p class="text-red-500 text-xs mt-1 hidden quantity-error-msg">Cannot exceed ordered quantity (2).</p>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-slate-200" data-original-quantity="1">
+                                    <td class="py-3 px-4 text-center align-middle"><input type="checkbox" class="h-5 w-5 rounded border-slate-400 text-[var(--primary-600)] focus:ring-[var(--primary-500)]"/></td>
+                                    <td class="py-3 px-4 align-middle"><div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12" style='background-image: url("https://placehold.co/100x100/FBBF24/92400E?text=Item2");'></div></td>
+                                    <td class="py-3 px-4 text-slate-800 align-middle">Wireless Headphones Pro</td>
+                                    <td class="py-3 px-4 text-slate-500 align-middle">
+                                        <input type="number" value="1" min="0" max="1" class="w-24 rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)] return-quantity-input">
+                                        <p class="text-red-500 text-xs mt-1 hidden quantity-error-msg">Cannot exceed ordered quantity (1).</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table></div>
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">Return Reason</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div><label class="block text-sm font-medium text-slate-700 mb-2">Reason for Return</label><select class="w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]"><option>Damaged Item</option><option>Wrong Item</option><option>Not as described</option><option>Changed my mind</option></select></div>
+                            <div><label class="block text-sm font-medium text-slate-700 mb-2">Additional Details</label><textarea placeholder="Please provide more details..." class="w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" rows="4"></textarea></div>
+                        </div>
+                        <div class="flex justify-end mt-8"><button id="submit-return-btn" class="rounded-md bg-[var(--primary-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)]">Submit Return Request</button></div>
+                    </div>
+                </div>
+            `;
+
+            function showReturnsList() {
+                pageContent.innerHTML = returnsListHTML;
+                attachReturnsListListeners();
+            }
+
+            function showRaiseReturnForm() {
+                pageContent.innerHTML = raiseReturnFormHTML;
+                document.getElementById('back-to-returns-btn').addEventListener('click', showReturnsList);
+
+                const returnItemsTbody = document.getElementById('return-items-tbody');
+                const submitButton = document.getElementById('submit-return-btn');
+
+                returnItemsTbody.addEventListener('input', (event) => {
+                    if (event.target.classList.contains('return-quantity-input')) {
+                        const input = event.target;
+                        const row = input.closest('tr');
+                        const errorMessage = row.querySelector('.quantity-error-msg');
+                        
+                        const originalQuantity = parseInt(row.dataset.originalQuantity, 10);
+                        let returnQuantity = parseInt(input.value, 10);
+
+                        if (isNaN(returnQuantity) || returnQuantity < 0) {
+                             input.value = 0;
+                             returnQuantity = 0;
+                        }
+
+                        if (returnQuantity > originalQuantity) {
+                            input.classList.add('border-red-500', 'focus:border-red-500', 'focus:ring-red-500');
+                            input.classList.remove('border-slate-300', 'focus:border-[var(--primary-500)]', 'focus:ring-[var(--primary-500)]');
+                            errorMessage.classList.remove('hidden');
+                        } else {
+                            input.classList.remove('border-red-500', 'focus:border-red-500', 'focus:ring-red-500');
+                            input.classList.add('border-slate-300', 'focus:border-[var(--primary-500)]', 'focus:ring-[var(--primary-500)]');
+                            errorMessage.classList.add('hidden');
+                        }
+                        
+                        // Check all inputs to determine if submit button should be enabled
+                        const allInputs = returnItemsTbody.querySelectorAll('.return-quantity-input');
+                        let isAnyInputInvalid = false;
+                        allInputs.forEach(inp => {
+                            const r = inp.closest('tr');
+                            const oq = parseInt(r.dataset.originalQuantity, 10);
+                            const rq = parseInt(inp.value, 10);
+                            if (rq > oq || rq < 0 || isNaN(rq)) {
+                                isAnyInputInvalid = true;
+                            }
+                        });
+
+                        if (isAnyInputInvalid) {
+                            submitButton.disabled = true;
+                            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+                        } else {
+                            submitButton.disabled = false;
+                            submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                        }
+                    }
+                });
+            }
+            
+            function attachReturnsListListeners() {
+                document.getElementById('raise-return-btn').addEventListener('click', showRaiseReturnForm);
+                const statusFilter = document.getElementById('status-filter');
+                const startDateInput = document.getElementById('start-date');
+                const endDateInput = document.getElementById('end-date');
+                const returnsTbody = document.getElementById('returns-tbody');
+                if (!returnsTbody) return;
+                const noResultsRow = document.getElementById('no-results-row');
+                const originalRows = Array.from(returnsTbody.querySelectorAll('tr:not(#no-results-row)'));
+
+                function filterReturns() {
+                    const selectedStatus = statusFilter.value;
+                    const startDate = startDateInput.value ? new Date(startDateInput.value) : null;
+                    const endDate = endDateInput.value ? new Date(endDateInput.value) : null;
+                    if(startDate) startDate.setHours(0, 0, 0, 0);
+                    if(endDate) endDate.setHours(23, 59, 59, 999);
+                    let visibleCount = 0;
+                    originalRows.forEach(row => {
+                        const statusCell = row.querySelector('td[data-label="Status"] .status-badge');
+                        const status = statusCell ? statusCell.textContent.toLowerCase().trim() : '';
+                        const dateCell = row.querySelector('td[data-label="Date"]');
+                        const rowDate = dateCell ? new Date(dateCell.textContent) : null;
+                        if(rowDate) rowDate.setHours(0,0,0,0);
+                        const statusMatch = selectedStatus === 'all' || status === selectedStatus;
+                        const startDateMatch = !startDate || (rowDate && rowDate >= startDate);
+                        const endDateMatch = !endDate || (rowDate && rowDate <= endDate);
+                        if (statusMatch && startDateMatch && endDateMatch) {
+                            row.style.display = '';
+                            visibleCount++;
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                    if (noResultsRow) noResultsRow.style.display = visibleCount === 0 ? '' : 'none';
+                }
+                statusFilter.addEventListener('change', filterReturns);
+                startDateInput.addEventListener('change', filterReturns);
+                endDateInput.addEventListener('change', filterReturns);
+                filterReturns();
+            }
+            
+            const hamburgerButton = document.getElementById('hamburger-button');
+            const sidenav = document.getElementById('sidenav');
+            hamburgerButton.addEventListener('click', () => sidenav.classList.toggle('-translate-x-full'));
+            
+            showReturnsList();
+        });
+    </script>
+</body>
+</html>
