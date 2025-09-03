@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Map - SATYA TRADERS</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <style type="text/tailwindcss">
+        :root {
+            --primary-50: #eef7ff;
+            --primary-100: #d8ecff;
+            --primary-200: #badfff;
+            --primary-300: #8ecfff;
+            --primary-400: #5bb2ff;
+            --primary-500: #338eff;
+            --primary-600: #0d7ff2;
+            --primary-700: #0060d1;
+            --primary-800: #0852b4;
+            --primary-900: #0b448a;
+            --primary-950: #0c2b54;
+        }
+        .status-badge {
+            @apply inline-block px-3 py-1 text-xs font-semibold rounded-full capitalize;
+        }
+        .status-pending-pickup { @apply bg-blue-100 text-blue-800; }
+        .status-out-for-delivery { @apply bg-indigo-100 text-indigo-800; }
+        .status-delivered { @apply bg-green-100 text-green-800; }
+        /* Ensure map has a defined height */
+        #map { height: 600px; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans">
+    <div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+             <!-- HEADER -->
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-4 sm:px-10 py-3 shadow-sm sticky top-0 z-30">
+                <div class="flex items-center gap-4">
+                    <button id="hamburger-button" class="flex lg:hidden size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div class="hidden sm:flex items-center gap-4 text-[#111418]">
+                         <div class="size-6 text-[var(--primary-600)]">
+                             <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor"></path></svg>
+                         </div>
+                         <h2 class="text-slate-900 text-lg font-bold leading-tight tracking-tight">SATYA TRADERS</h2>
+                     </div>
+                </div>
+                <div class="flex flex-1 justify-end items-center gap-3">
+                    <div class="flex items-center gap-2 rounded-full bg-slate-100 p-1 text-sm font-semibold">
+                        <button class="rounded-full bg-white px-3 py-1 text-[var(--primary-600)]">EN</button>
+                        <button class="px-3 py-1 text-slate-500 hover:text-slate-700">HI</button>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-1">
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path></svg></button>
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16h18L59.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,152,204a28,28,0,1,0,28-28H83.17a8,8,0,0,1-7.87-6.57L72.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,222.14,58.87ZM96,204a12,12,0,1,1-12-12A12,12,0,0,1,96,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,192,204Zm4-74.57A8,8,0,0,1,188.1,136H69.22L57.59,72H206.41Z"></path></svg></button>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200 mx-1"></div>
+                    <div class="relative">
+                        <button class="group flex items-center gap-2">
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://placehold.co/100x100/7F9CF5/EBF4FF?text=AV");'></div>
+                            <svg class="text-slate-500 group-hover:text-[var(--primary-600)] hidden sm:block" fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,48,88H208a8,8,0,0,1,5.66,13.66Z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex flex-1">
+                <!-- SIDEBAR -->
+                 <aside id="sidenav" class="w-64 flex-shrink-0 border-r border-slate-200 bg-white p-4 flex-col fixed lg:relative lg:flex h-full lg:h-auto -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-20">
+                    <ul class="flex flex-col gap-2">
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path></svg><span>Dashboard</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"></path></svg><span>Products</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"></path></svg><span>Orders</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"></path></svg><span>Returns</span></a></li>
+                         <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="billing.html"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M208,24H48A24,24,0,0,0,24,48V208a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V48A24,24,0,0,0,208,24Zm8,184a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V48a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8ZM108,100a12,12,0,1,1-12-12A12,12,0,0,1,108,100Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,148,100Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,188,100Zm-88,28H88a8,8,0,0,0-8,8v40a8,8,0,0,0,8,8h24a8,8,0,0,0,8-8V136A8,8,0,0,0,112,128Zm-8,40H96V144h8Zm48-40a8,8,0,0,0-8,8v40a8,8,0,0,0,16,0V136A8,8,0,0,0,152,128Zm40,8a8,8,0,0,0-8,8v16a8,8,0,0,0,16,0V144A8,8,0,0,0,192,136Z"></path></svg><span>Billing</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="my_deliveries.html"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M216,40H82.44A23.91,23.91,0,0,0,64,48.51L24,81.18V208a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,208V86.82L67.56,64H216V208ZM88,104a12,12,0,1,1-12-12A12,12,0,0,1,88,104Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,128,104Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,168,104Z"></path></svg><span>My Deliveries</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="update_status.html"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M216.42,154.42,142.17,80.17a12,12,0,0,0-17.48,1.4L101.4,112H48a8,8,0,0,0-8,8v80a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V165.48A12,12,0,0,0,216.42,154.42ZM200,200H56V128h49.52a12,12,0,0,0,10.58-6.17l21.25-37.18,65.07,65.07Z M128,64 a16,16,0,1,0-16-16 A16,16,0,0,0,128,64 Z"></path></svg><span>Update Status</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md bg-[var(--primary-50)] px-3 py-2 text-sm font-semibold text-[var(--primary-600)]" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M128,24a80,80,0,0,0-80,80c0,28.47,33.24,73.54,64.2,105.15a16,16,0,0,0,23.6,0C174.76,177.54,208,132.47,208,104A80,80,0,0,0,128,24Zm0,112a32,32,0,1,1,32-32A32,32,0,0,1,128,136Z"></path></svg><span>Delivery Map</span></a></li>
+                        <li><a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg><span>Support</span></a></li>
+                    </ul>
+                </aside>
+
+                <!-- MAIN CONTENT -->
+                <main class="flex-1 overflow-y-auto p-4 md:p-8">
+                    <div class="max-w-7xl mx-auto">
+                        <header class="mb-6">
+                            <nav class="text-sm mb-2" aria-label="Breadcrumb">
+                                <ol class="list-none p-0 inline-flex">
+                                    <li class="flex items-center"><a href="#" class="text-slate-500 hover:text-[var(--primary-600)]">Delivery</a><svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg></li>
+                                    <li><span class="text-slate-700 font-medium">Delivery Map</span></li>
+                                </ol>
+                            </nav>
+                             <h1 class="text-3xl font-bold text-slate-900">Delivery Map</h1>
+                        </header>
+                        
+                        <div class="lg:flex lg:gap-8">
+                            <!-- Map Container -->
+                            <div class="flex-grow bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                                <div id="map" class="rounded-md"></div>
+                            </div>
+
+                            <!-- Sidebar / Controls -->
+                            <div class="w-full lg:w-80 flex-shrink-0 mt-8 lg:mt-0">
+                                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                                    <h3 class="font-bold text-slate-800 mb-4">Today's Deliveries</h3>
+                                    <div id="delivery-list" class="space-y-3 max-h-96 overflow-y-auto">
+                                        <!-- Delivery items will be injected here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <!-- FOOTER -->
+            <footer class="border-t border-slate-200 bg-white">
+                 <div class="mx-auto max-w-7xl px-6 py-12">
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+                        <div class="md:col-span-4"><h3 class="text-lg font-semibold text-slate-900">About Satya Traders</h3><p class="mt-4 text-sm text-slate-500">Vendor-specific information and details about our platform. Your success is our priority.</p></div>
+                        <div class="md:col-span-2"><h4 class="text-base font-semibold text-slate-900">Quick Links</h4><ul class="mt-4 space-y-2 text-sm"><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Dashboard</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Products</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Orders</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Support</a></li></ul></div>
+                        <div class="md:col-span-6"><h4 class="text-base font-semibold text-slate-900">Newsletter</h4><form class="mt-4 flex flex-col gap-4 sm:flex-row"><input class="flex-grow rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" placeholder="Name" type="text" /><input class="flex-grow rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" placeholder="Mobile Number" type="text" /><button class="rounded-md bg-[var(--primary-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)]" type="submit">Subscribe</button></form></div>
+                    </div>
+                    <div class="mt-12 border-t border-slate-200 pt-8 text-center text-sm text-slate-500">
+                        <p>© 2025 Satya Traders. All rights reserved.</p>
+                        <div class="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2">
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Privacy Policy</a>
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Terms of Service</a>
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Refund Policy</a>
+                            <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Shipping Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- MOCK DATA ---
+        const deliveries = [
+            { id: 'ORD-201', customer: 'Ravi Kumar', address: 'Tech Park, Andheri', status: 'Out for Delivery', coords: [19.1136, 72.8697] },
+            { id: 'ORD-202', customer: 'Sunita Menon', address: 'Film City, Goregaon', status: 'Pending Pickup', coords: [19.1590, 72.8762] },
+            { id: 'ORD-203', customer: 'Anil Desai', address: 'Gateway of India, Colaba', status: 'Out for Delivery', coords: [18.9220, 72.8347] }
+        ];
+        const pickupPoint = [19.0760, 72.8777]; // Mumbai central point as pickup
+
+        // --- DOM ELEMENTS ---
+        const deliveryListContainer = document.getElementById('delivery-list');
+        
+        // --- MAP INITIALIZATION ---
+        // Note: No API key needed for OpenStreetMap
+        const map = L.map('map').setView([19.0760, 72.8777], 12); // Centered on Mumbai
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // --- FUNCTIONS ---
+
+        function renderMapElements() {
+             // Clear existing layers
+            map.eachLayer(layer => {
+                if (!!layer.toGeoJSON) map.removeLayer(layer);
+            });
+            
+            deliveryListContainer.innerHTML = '';
+
+            // Add pickup point
+            L.marker(pickupPoint, { 
+                icon: L.divIcon({ className: 'bg-black text-white rounded-full p-2 grid place-items-center', html: 'P' })
+            }).addTo(map).bindPopup("<b>Pickup Point / Warehouse</b>");
+            
+            deliveries.forEach(d => {
+                // Add Marker
+                const marker = L.marker(d.coords).addTo(map)
+                    .bindPopup(`<b>Order:</b> ${d.id}<br><b>Customer:</b> ${d.customer}<br><b>Status:</b> ${d.status}`);
+                
+                // Draw Route for one item as an example
+                if (d.id === 'ORD-201') {
+                    L.polyline([pickupPoint, d.coords], { color: 'var(--primary-600)' }).addTo(map);
+                }
+
+                // Populate Sidebar
+                const listItem = document.createElement('div');
+                listItem.className = 'p-3 border rounded-md cursor-pointer hover:bg-slate-50';
+                listItem.innerHTML = `
+                    <p class="font-semibold text-slate-800">${d.id} - ${d.customer}</p>
+                    <p class="text-xs text-slate-500">${d.address}</p>
+                    <span class="mt-2 status-badge status-${d.status.toLowerCase().replace(/ /g, '-')}">${d.status}</span>
+                `;
+                listItem.addEventListener('click', () => {
+                    map.flyTo(d.coords, 15);
+                    marker.openPopup();
+                });
+                deliveryListContainer.appendChild(listItem);
+            });
+        }
+        
+        // Hamburger Menu
+        document.getElementById('hamburger-button').addEventListener('click', () => {
+             document.getElementById('sidenav').classList.toggle('-translate-x-full');
+        });
+
+        // --- INITIAL RENDER ---
+        renderMapElements();
+    });
+    </script>
+</body>
+</html>

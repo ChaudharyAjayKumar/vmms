@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Satya Traders VMMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; /* 70% White */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 0;
+            margin: 0;
+        }
+        .register-container {
+            background-color: #f9f9f9;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+        }
+        .logo-container {
+            width: 130px; /* Adjusted for the new logo size */
+            height: 130px;
+            margin: 0 auto 20px auto;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            resize: vertical;
+        }
+        #password-reqs {
+            font-size: 13px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #fef4f4;
+            border-left: 4px solid #d9534f; /* Red */
+            display: none; /* Initially hidden */
+        }
+        #password-reqs p {
+            margin: 5px 0;
+            color: #c9302c; /* Red text */
+        }
+        #password-reqs p.valid {
+            color: #5cb85c; /* Green text */
+            text-decoration: line-through;
+        }
+        .btn-register {
+            width: 100%;
+            padding: 15px;
+            background-color: #d9534f; /* 15% Red */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-register:hover {
+            background-color: #c9302c;
+        }
+        .footer-links {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .footer-links a {
+            color: #5cb85c; /* Green Accent */
+            text-decoration: none;
+        }
+        .hidden-fields {
+            display: none;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .register-container {
+                padding: 20px;
+                width: 95%;
+            }
+        }
+        /* Language toggle style */
+        .language-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+        .language-toggle button {
+            background: none;
+            border: none;
+            color: #d9534f;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 12px;
+        }
+        .language-toggle button.active {
+            color: #5cb85c;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <!-- Language Toggle Switch -->
+        <div class="language-toggle">
+            <button id="btn-en" class="active" type="button">EN</button>
+            <button id="btn-hi" type="button">हिंदी</button>
+        </div>
+
+        <div class="logo-container">
+            <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#d9534f;" />
+                  <stop offset="50%" style="stop-color:#f0ad4e;" />
+                  <stop offset="100%" style="stop-color:#5cb85c;" />
+                </linearGradient>
+              </defs>
+              <circle cx="100" cy="100" r="98" fill="none" stroke="#e2e8f0" stroke-width="4"/>
+              <g transform="translate(100, 100)">
+                <path d="M95,0 A95,95 0 0,1 0,95 A95,95 0 0,1 -95,0 A95,95 0 0,1 0,-95 A95,95 0 0,1 95,0 Z" stroke="#a0aec0" stroke-width="1.5" fill="none" stroke-dasharray="5, 5" stroke-linecap="round"/>
+              </g>
+              <text x="100" y="115" font-family="'Montserrat', sans-serif" font-size="64" font-weight="700" fill="url(#logoGradient)" text-anchor="middle">
+                ST
+              </text>
+            </svg>
+        </div>
+        
+        <h2 id="title">Create Your Account</h2>
+        
+        <form action="AuthServlet" method="post" onsubmit="return validateForm()">
+            <input type="hidden" name="action" value="register"/>
+            
+            <div class="form-group">
+                <label for="username" id="label-username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="role" id="label-role">Select Your Role</label>
+                <select id="role" name="role" onchange="toggleRoleFields()" required>
+                    <option value="" id="option-role-default">--Select Role--</option>
+                    <option value="Vendor" id="option-role-vendor">Vendor</option>
+                    <option value="DeliveryPartner" id="option-role-delivery">Delivery Partner</option>
+                    <option value="Admin" id="option-role-admin">Admin</option>
+                </select>
+            </div>
+            
+            <div id="vendor-fields" class="hidden-fields">
+                <div class="form-group">
+                    <label for="vendorName" id="label-vendorName">Company Name</label>
+                    <input type="text" id="vendorName" name="vendorName">
+                </div>
+                <div class="form-group">
+                    <label for="vendorContact" id="label-vendorContact">Contact Number</label>
+                    <input type="text" id="vendorContact" name="vendorContact">
+                </div>
+                <div class="form-group">
+                    <label for="address" id="label-address">Address</label>
+                    <textarea id="address" name="address" rows="3"></textarea>
+                </div>
+            </div>
+            
+            <div id="admin-delivery-fields" class="hidden-fields">
+                 <div class="form-group">
+                    <label for="fullName" id="label-fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName">
+                </div>
+                <div class="form-group">
+                    <label for="contact" id="label-contact">Contact Number</label>
+                    <input type="text" id="contact" name="contact">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" id="label-password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div id="password-reqs">
+                    <p id="length">At least 8 characters long</p>
+                    <p id="capital">At least one uppercase letter</p>
+                    <p id="special">At least one special character (!@#$%^&*)</p>
+                </div>
+            </div>
+             <div class="form-group">
+                <label for="confirmPassword" id="label-confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+
+            <button type="submit" class="btn-register" id="btn-register">Register</button>
+        </form>
+        
+        <div class="footer-links">
+            <span id="footer-hint">Already have an account? </span>
+            <a href="login.html" id="footer-login-link">Login Here</a>
+        </div>
+    </div>
+
+    <script>
+        // --- Password Validation Logic ---
+        const passwordInput = document.getElementById('password');
+        const reqsContainer = document.getElementById('password-reqs');
+        const lengthReq = document.getElementById('length');
+        const capitalReq = document.getElementById('capital');
+        const specialReq = document.getElementById('special');
+
+        passwordInput.addEventListener('focus', () => {
+            reqsContainer.style.display = 'block';
+        });
+
+        let passwordIsValid = false;
+
+        passwordInput.addEventListener('keyup', () => {
+            const pass = passwordInput.value;
+            let checks = { length: false, capital: false, special: false };
+            
+            checks.length = pass.length >= 8;
+            checks.capital = /[A-Z]/.test(pass);
+            checks.special = /[!@#$%^&*]/.test(pass);
+            
+            lengthReq.classList.toggle('valid', checks.length);
+            capitalReq.classList.toggle('valid', checks.capital);
+            specialReq.classList.toggle('valid', checks.special);
+            
+            passwordIsValid = checks.length && checks.capital && checks.special;
+        });
+
+        // --- Dynamic Role Fields Logic ---
+        function toggleRoleFields() {
+            const role = document.getElementById('role').value;
+            const vendorFields = document.getElementById('vendor-fields');
+            const otherFields = document.getElementById('admin-delivery-fields');
+
+            vendorFields.style.display = 'none';
+            otherFields.style.display = 'none';
+
+            vendorFields.querySelectorAll('input, textarea').forEach(el => el.required = false);
+            otherFields.querySelectorAll('input').forEach(el => el.required = false);
+            
+            if (role === 'Vendor') {
+                vendorFields.style.display = 'block';
+                vendorFields.querySelectorAll('input, textarea').forEach(el => el.required = true);
+            } else if (role === 'Admin' || role === 'DeliveryPartner') {
+                otherFields.style.display = 'block';
+                otherFields.querySelectorAll('input').forEach(el => el.required = true);
+            }
+        }
+
+        // --- Form Submission Validation ---
+        function validateForm() {
+            const password = passwordInput.value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert(currentLang === 'hi' ? 'पासवर्ड मेल नहीं खाते!' : 'Passwords do not match!');
+                return false;
+            }
+            
+            if (!passwordIsValid) {
+                alert(currentLang === 'hi' ? 'पासवर्ड आवश्यकताओं को पूरा नहीं करता।' : 'Password does not meet the requirements.');
+                return false;
+            }
+
+            return true;
+        }
+
+        // --- Language Toggle Implementation ---
+        const translations = {
+            en: {
+                "title": "Create Your Account",
+                "label-username": "Username",
+                "label-role": "Select Your Role",
+                "option-role-default": "--Select Role--",
+                "option-role-vendor": "Vendor",
+                "option-role-delivery": "Delivery Partner",
+                "option-role-admin": "Admin",
+                "label-vendorName": "Company Name",
+                "label-vendorContact": "Contact Number",
+                "label-address": "Address",
+                "label-fullName": "Full Name",
+                "label-contact": "Contact Number",
+                "label-password": "Password",
+                "length": "At least 8 characters long",
+                "capital": "At least one uppercase letter",
+                "special": "At least one special character (!@#$%^&*)",
+                "label-confirmPassword": "Confirm Password",
+                "btn-register": "Register",
+                "footer-hint": "Already have an account? ",
+                "footer-login-link": "Login Here"
+            },
+            hi: {
+                "title": "अपना अकाउंट बनाएं",
+                "label-username": "यूज़रनेम",
+                "label-role": "अपना रोल चुनें",
+                "option-role-default": "--रोल चुनें--",
+                "option-role-vendor": "विक्रेता",
+                "option-role-delivery": "डिलीवरी पार्टनर",
+                "option-role-admin": "एडमिन",
+                "label-vendorName": "कंपनी का नाम",
+                "label-vendorContact": "संपर्क नंबर",
+                "label-address": "पता",
+                "label-fullName": "पूरा नाम",
+                "label-contact": "संपर्क नंबर",
+                "label-password": "पासवर्ड",
+                "length": "कम से कम 8 अक्षर लंबा",
+                "capital": "कम से कम एक बड़ा अक्षर",
+                "special": "कम से कम एक विशेष अक्षर (!@#$%^&*)",
+                "label-confirmPassword": "पासवर्ड पुष्टि करें",
+                "btn-register": "रजिस्टर करें",
+                "footer-hint": "क्या आपके पास पहले से खाता है? ",
+                "footer-login-link": "यहाँ लॉगिन करें"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            // Update text content for all translatable elements
+            Object.keys(translations[lang]).forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) {
+                    if (el.tagName === 'OPTION') {
+                        el.text = translations[lang][id];
+                    } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        // Placeholder if needed
+                    } else {
+                        el.textContent = translations[lang][id];
+                    }
+                }
+            });
+
+            // Update active state in toggle
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+        }
+
+        document.getElementById('btn-en').onclick = function() { setLanguage('en'); };
+        document.getElementById('btn-hi').onclick = function() { setLanguage('hi'); };
+
+        // Initial language set
+        setLanguage(currentLang);
+    </script>
+</body>
+</html>

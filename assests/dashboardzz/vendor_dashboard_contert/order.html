@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet" />
+    <title>Vendor Orders - SATYA TRADERS</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+      :root {
+        --primary-50: #eef7ff;
+        --primary-100: #d8ecff;
+        --primary-200: #badfff;
+        --primary-300: #8ecfff;
+        --primary-400: #5bb2ff;
+        --primary-500: #338eff;
+        --primary-600: #0d7ff2;
+        --primary-700: #0060d1;
+        --primary-800: #0852b4;
+        --primary-900: #0b448a;
+        --primary-950: #0c2b54;
+      }
+      .sidenav-collapse { display: none; padding-left: 1rem; }
+      .sidenav-collapse.show { display: block; }
+      .sidenav-toggle::after { content: '▶'; display: inline-block; margin-left: auto; transition: transform 0.2s ease-in-out; font-size: 0.8em; }
+      .sidenav-toggle.open::after { transform: rotate(90deg); }
+      
+      /* Responsive Table Styles */
+      @media (max-width: 768px) {
+        .responsive-table thead {
+            display: none;
+        }
+        .responsive-table tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .responsive-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .responsive-table td:last-child {
+            border-bottom: none;
+        }
+        .responsive-table td::before {
+            content: attr(data-label);
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+      }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans">
+    <div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- HEADER -->
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 px-10 py-4 shadow-sm relative">
+                <div class="flex items-center gap-4">
+                    <button id="hamburger-button" class="flex lg:hidden size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
+                    <div class="size-6 text-[var(--primary-600)]">
+                        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path></svg>
+                    </div>
+                    <h2 class="text-xl font-bold tracking-tight text-slate-900">SATYA TRADERS</h2>
+                </div>
+                <div class="flex items-center justify-end gap-3 ml-auto">
+                    <div class="flex items-center gap-2 rounded-full bg-slate-100 p-1 text-sm font-semibold">
+                        <button class="rounded-full bg-white px-3 py-1 text-[var(--primary-600)]">EN</button>
+                        <button class="px-3 py-1 text-slate-500">HI</button>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path></svg></button>
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16h18L59.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,152,204a28,28,0,1,0,28-28H83.17a8,8,0,0,1-7.87-6.57L72.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,222.14,58.87ZM96,204a12,12,0,1,1-12-12A12,12,0,0,1,96,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,192,204Zm4-74.57A8,8,0,0,1,188.1,136H69.22L57.59,72H206.41Z"></path></svg></button>
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32ZM128,206.8C109.74,196.16,32,147.69,32,94A46.06,46.06,0,0,1,78,48c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,147.61,146.24,196.15,128,206.8Z"></path></svg></button>
+                        <button class="flex size-10 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-[var(--primary-600)]"><svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M80,120h96a8,8,0,0,0,8-8V64a8,8,0,0,0-8-8H80a8,8,0,0,0-8,8v48A8,8,0,0,0,80,120Zm8-48h80v32H88ZM200,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V40A16,16,0,0,0,200,24Zm0,192H56V40H200ZM100,148a12,12,0,1,1-12-12A12,12,0,0,1,100,148Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,140,148Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,180,148Zm-80,40a12,12,0,1,1-12-12A12,12,0,0,1,100,188Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,140,188Zm40,0a12,12,0,1,1-12-12A12,12,0,0,1,180,188Z"></path></svg></button>
+                    </div>
+                    <div class="h-10 w-px bg-slate-200 mx-2"></div>
+                    <div class="relative">
+                        <button class="group flex items-center gap-2">
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9hVMrtE_L10uXnTiS261EIMWJHJpsGyss0tRfUzmDTX9ijUYVTxVptP_yWCrEG6qmI77tLICJc_TvvQUdDG191BEJA2wmWE-Ku5yQcjyPn8IK344vTRtc4dpr0OePoNTRoG4cA9pEzyZVMv1_rIFWt6hdSJItQXvgpJW_ZWH_zW6vczapsv7xM8XfAkgU0xwyL8vN3AqLzHCC-jQZLu7skoVzAFdQVtkV3zImfmI7IZAkL_5k77cY7IqntnFR6ATHo5kM7mFRATQ");'></div>
+                            <svg class="text-slate-500 group-hover:text-[var(--primary-600)]" fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,48,88H208a8,8,0,0,1,5.66,13.66Z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex flex-1">
+                <aside id="sidenav" class="w-64 flex-shrink-0 border-r border-slate-200 bg-white p-4 flex-col fixed lg:relative lg:flex h-full lg:h-auto -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-20">
+                    <ul class="flex flex-col gap-2">
+                        <li>
+                            <a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="dashboard.html">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path></svg>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="products.html">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"></path></svg>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                         <li>
+                            <a class="flex items-center gap-3 rounded-md bg-[var(--primary-50)] px-3 py-2 text-sm font-semibold text-[var(--primary-600)]" href="orders.html">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"></path></svg>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="returns.html">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"></path></svg>
+                                <span>Returns</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M208,80a8,8,0,0,1-8,8H167.85c.09,1.32.15,2.65.15,4a60.07,60.07,0,0,1-60,60H92.69l72.69,66.08a8,8,0,1,1-10.76,11.84l-88-80A8,8,0,0,1,72,136h36a44.05,44.05,0,0,0,44-44c0-1.35-.07-2.68-.19-4H72a8,8,0,0,1,0-16h75.17A44,44,0,0,0,108,48H72a8,8,0,0,1,0-16H200a8,8,0,0,1,0,16H148.74a60.13,60.13,0,0,1,15.82,24H200A8,8,0,0,1,208,80Z"></path></svg>
+                                <span>Billing</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100" href="#">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg>
+                                <span>Support</span>
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+                <main class="flex-1 overflow-y-auto p-8">
+                    <div class="max-w-7xl mx-auto">
+                        <div class="flex flex-wrap items-center justify-between gap-y-4 mb-6">
+                            <h1 class="text-3xl font-bold text-slate-900">My Orders</h1>
+                            <div class="flex flex-wrap items-center gap-4">
+                                <select class="rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                                    <option>Filter by Status</option>
+                                    <option>Delivered</option>
+                                    <option>Shipped</option>
+                                    <option>Pending</option>
+                                </select>
+                                <input type="date" class="rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                                <input type="date" class="rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                                <a href="products.html" class="rounded-md bg-[var(--primary-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)]">Place New Order</a>
+                            </div>
+                        </div>
+                        <div class="mt-4 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+                            <table class="min-w-full divide-y divide-slate-200 responsive-table">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500" scope="col">Order ID</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500" scope="col">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500" scope="col">Items</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500" scope="col">Total</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500" scope="col">Payment</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500" scope="col">Status</th>
+                                        <th class="relative px-6 py-3" scope="col"><span class="sr-only">Actions</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 bg-white">
+                                    <tr>
+                                        <td data-label="Order ID" class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-900">#12345</td>
+                                        <td data-label="Date" class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">2025-08-28</td>
+                                        <td data-label="Items" class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">3 items</td>
+                                        <td data-label="Total" class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">$250.00</td>
+                                        <td data-label="Payment" class="whitespace-nowrap px-6 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">Paid</span></td>
+                                        <td data-label="Status" class="whitespace-nowrap px-6 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">Delivered</span></td>
+                                        <td data-label="Actions" class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium space-x-4">
+                                            <button class="text-[var(--primary-600)] hover:text-[var(--primary-800)] view-details-btn">View</button>
+                                            <a href="returns.html" class="text-slate-600 hover:text-slate-800">Return</a>
+                                            <button class="text-red-600 hover:text-red-800 report-btn">Report</button>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td data-label="Order ID" class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-900">#67890</td>
+                                        <td data-label="Date" class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">2025-08-29</td>
+                                        <td data-label="Items" class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">1 item</td>
+                                        <td data-label="Total" class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">$150.75</td>
+                                        <td data-label="Payment" class="whitespace-nowrap px-6 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-800">Due</span></td>
+                                        <td data-label="Status" class="whitespace-nowrap px-6 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800">Shipped</span></td>
+                                        <td data-label="Actions" class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium space-x-4">
+                                            <button class="text-[var(--primary-600)] hover:text-[var(--primary-800)] view-details-btn">View</button>
+                                             <a href="returns.html" class="text-slate-600 hover:text-slate-800">Return</a>
+                                            <button class="text-red-600 hover:text-red-800 report-btn">Report</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <footer class="border-t border-slate-200 bg-white">
+                <div class="mx-auto max-w-7xl px-6 py-12">
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+                        <div class="md:col-span-4"><h3 class="text-lg font-semibold text-slate-900">About Satya Traders</h3><p class="mt-4 text-sm text-slate-500">Vendor-specific information and details about our platform. Your success is our priority.</p></div>
+                        <div class="md:col-span-2"><h4 class="text-base font-semibold text-slate-900">Quick Links</h4><ul class="mt-4 space-y-2 text-sm"><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Dashboard</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Products</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Orders</a></li><li><a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Support</a></li></ul></div>
+                        <div class="md:col-span-6"><h4 class="text-base font-semibold text-slate-900">Newsletter</h4><form class="mt-4 flex flex-col gap-4"><input class="w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" placeholder="Name" type="text" /><input class="w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" placeholder="Mobile Number" type="text" /><button class="rounded-md bg-[var(--primary-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)]" type="submit">Subscribe</button></form></div>
+                    </div>
+                    <div class="mt-12 border-t border-slate-200 pt-8 text-center text-sm text-slate-500">
+                        <p>© 2025 Satya Traders. All rights reserved.</p>
+                        <div class="mt-4 flex justify-center gap-x-6">
+                             <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Privacy Policy</a>
+                             <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Terms of Service</a>
+                             <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Refund Policy</a>
+                             <a class="text-slate-500 hover:text-[var(--primary-600)]" href="#">Shipping Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="order-details-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-30">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-slate-900">Order Details</h2>
+                <button class="text-slate-500 hover:text-slate-800 text-2xl font-bold close-modal-btn">&times;</button>
+            </div>
+            <div>
+                <p><strong>Order ID:</strong> #12345</p>
+                <p><strong>Date:</strong> 2025-08-28</p>
+                <p><strong>Total:</strong> $250.00</p>
+                <p><strong>Status:</strong> Delivered</p>
+                <h3 class="text-lg font-semibold mt-4 mb-2">Items</h3>
+                <ul class="list-disc pl-5">
+                    <li>Wireless Headphones - $99.99 x 1</li>
+                    <li>Bluetooth Speaker - $75.01 x 2</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Report Issue Modal -->
+    <div id="report-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-30">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-slate-900">Report an Issue</h2>
+                <button class="text-slate-500 hover:text-slate-800 text-2xl font-bold close-modal-btn">&times;</button>
+            </div>
+            <form>
+                <div class="mb-4">
+                    <label for="report-order-id" class="block text-sm font-medium text-slate-700">Order ID</label>
+                    <input type="text" id="report-order-id" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm bg-slate-100" value="#12345" readonly>
+                </div>
+                <div class="mb-4">
+                    <label for="report-reason" class="block text-sm font-medium text-slate-700">Reason for Report</label>
+                    <select id="report-reason" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                        <option>Missing Items</option>
+                        <option>Incorrect Billing</option>
+                        <option>Late Delivery</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label for="report-comments" class="block text-sm font-medium text-slate-700">Details</label>
+                    <textarea id="report-comments" rows="4" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" placeholder="Please provide more details about the issue..."></textarea>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="rounded-md bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-300 close-modal-btn">Cancel</button>
+                    <button type="submit" class="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700">Submit Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Return Request Modal -->
+    <div id="return-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-30">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
+             <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-slate-900">Request a Return</h2>
+                <button class="text-slate-500 hover:text-slate-800 text-2xl font-bold close-modal-btn">&times;</button>
+            </div>
+            <form>
+                <div class="mb-4">
+                    <label for="return-order-id" class="block text-sm font-medium text-slate-700">Order ID</label>
+                    <input type="text" id="return-order-id" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm bg-slate-100" value="#12345" readonly>
+                </div>
+                <div class="mb-4">
+                    <label for="return-reason" class="block text-sm font-medium text-slate-700">Reason for Return</label>
+                    <select id="return-reason" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]">
+                        <option>Damaged Goods</option>
+                        <option>Incorrect Item Received</option>
+                        <option>Order Error</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label for="return-comments" class="block text-sm font-medium text-slate-700">Comments</label>
+                    <textarea id="return-comments" rows="4" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-[var(--primary-500)] focus:ring-[var(--primary-500)]" placeholder="Please provide details about the items you wish to return..."></textarea>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="rounded-md bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-300 close-modal-btn">Cancel</button>
+                    <button type="submit" class="rounded-md bg-[var(--primary-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[var(--primary-700)]">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sidenav toggling logic
+            const hamburgerButton = document.getElementById('hamburger-button');
+            const sidenav = document.getElementById('sidenav');
+            hamburgerButton.addEventListener('click', function() {
+                sidenav.classList.toggle('-translate-x-full');
+            });
+
+            // Generic Modal Logic
+            const viewDetailsBtns = document.querySelectorAll('.view-details-btn');
+            const returnBtns = document.querySelectorAll('.return-btn');
+            const reportBtns = document.querySelectorAll('.report-btn');
+            
+            const orderDetailsModal = document.getElementById('order-details-modal');
+            const returnModal = document.getElementById('return-modal');
+            const reportModal = document.getElementById('report-modal');
+
+            const allModals = document.querySelectorAll('.fixed.inset-0');
+            const closeModalBtns = document.querySelectorAll('.close-modal-btn');
+
+            const openModal = (modal) => modal.classList.remove('hidden');
+            const closeModal = (modal) => modal.classList.add('hidden');
+
+            viewDetailsBtns.forEach(btn => btn.addEventListener('click', () => openModal(orderDetailsModal)));
+            returnBtns.forEach(btn => btn.addEventListener('click', () => openModal(returnModal)));
+            reportBtns.forEach(btn => btn.addEventListener('click', () => openModal(reportModal)));
+
+            closeModalBtns.forEach(btn => btn.addEventListener('click', () => {
+                allModals.forEach(modal => closeModal(modal));
+            }));
+
+            allModals.forEach(modal => {
+                modal.addEventListener('click', (event) => {
+                    if (event.target === modal) {
+                        closeModal(modal);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
